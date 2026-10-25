@@ -1,0 +1,13 @@
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+
+# Local database and vector index
+data/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example

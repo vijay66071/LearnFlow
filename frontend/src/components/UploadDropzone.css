@@ -1,0 +1,544 @@
+.app-shell .upload-card {
+  position: relative;
+  display: grid;
+  min-height: 318px;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.85fr);
+  align-items: center;
+  overflow: hidden;
+  padding: 38px 48px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at 77% 48%, rgba(185, 169, 255, 0.28), transparent 19rem),
+    linear-gradient(125deg, rgba(255, 255, 255, 0.94), rgba(246, 241, 255, 0.82));
+  box-shadow:
+    0 22px 60px rgba(53, 38, 104, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  isolation: isolate;
+  text-align: left;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.app-shell .upload-card::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.32), transparent 42%);
+  content: "";
+  pointer-events: none;
+}
+
+.app-shell .upload-card.dragging {
+  transform: translateY(-2px);
+  border-color: #8b6df1;
+  box-shadow:
+    0 0 0 4px rgba(118, 88, 232, 0.15),
+    0 24px 65px rgba(85, 60, 174, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.app-shell .upload-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 450px;
+}
+
+.app-shell .upload-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #63538e;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 1.35px;
+}
+
+.app-shell .upload-kicker > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #63c9a6;
+  box-shadow: 0 0 0 4px rgba(99, 201, 166, 0.15);
+}
+
+.app-shell .upload-card h2 {
+  max-width: 420px;
+  margin: 13px 0 9px;
+  color: #25203b;
+  font-size: clamp(25px, 2.7vw, 34px);
+  font-weight: 720;
+  letter-spacing: -1.25px;
+  line-height: 1.12;
+}
+
+.app-shell .upload-copy > p:not(.file-error) {
+  max-width: 370px;
+  color: #5e5872;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.app-shell .upload-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 21px;
+}
+
+.app-shell .upload-card .primary-button {
+  min-height: 43px;
+  gap: 12px;
+  margin: 0;
+  padding: 0 17px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 11px;
+  background: linear-gradient(120deg, #7957e8, #5838c4);
+  box-shadow:
+    0 9px 19px rgba(83, 55, 193, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.app-shell .upload-card .primary-button:hover {
+  transform: translateY(-2px);
+  filter: saturate(1.15);
+  box-shadow:
+    0 13px 25px rgba(83, 55, 193, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.app-shell .upload-card .primary-button:active {
+  transform: translateY(0);
+}
+
+.app-shell .upload-card .primary-button:focus-visible {
+  outline: 3px solid #42309b;
+  outline-offset: 4px;
+}
+
+.app-shell .upload-card .file-types {
+  margin: 0;
+  color: #625b76;
+  font-size: 10px;
+}
+
+.app-shell .file-types span {
+  margin: 0 3px;
+  color: #9b8bbf;
+}
+
+.app-shell .upload-card .file-error {
+  margin: 12px 0 0;
+  color: #a51f3d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.app-shell .upload-visual {
+  position: relative;
+  display: grid;
+  min-height: 250px;
+  place-items: center;
+  perspective: 900px;
+  transform-style: preserve-3d;
+}
+
+.app-shell .visual-aura {
+  position: absolute;
+  width: 225px;
+  height: 225px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(166, 135, 255, 0.27), rgba(166, 135, 255, 0) 70%);
+  filter: blur(5px);
+}
+
+.app-shell .visual-orbit {
+  position: absolute;
+  width: 245px;
+  height: 154px;
+  border: 1px solid rgba(123, 94, 205, 0.18);
+  border-radius: 50%;
+  transform: rotate(-25deg) rotateX(62deg);
+}
+
+.app-shell .orbit-b {
+  width: 206px;
+  height: 186px;
+  border-color: rgba(255, 112, 151, 0.24);
+  transform: rotate(31deg) rotateX(62deg);
+}
+
+.app-shell .document-stack {
+  position: relative;
+  width: 172px;
+  height: 210px;
+  transform: rotateY(-17deg) rotateX(7deg) rotateZ(-4deg);
+  transform-style: preserve-3d;
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: document-hover 6s ease-in-out infinite;
+}
+
+.app-shell .upload-card:hover .document-stack,
+.app-shell .upload-card.dragging .document-stack {
+  transform: rotateY(-6deg) rotateX(1deg) rotateZ(-2deg) translateY(-5px);
+}
+
+.app-shell .document-sheet {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 21px 19px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 13px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(246, 242, 255, 0.81));
+  box-shadow:
+    0 24px 42px rgba(51, 35, 101, 0.18),
+    inset 0 1px 0 #fff;
+  backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+}
+
+.app-shell .sheet-back {
+  transform: translate3d(23px, -12px, -30px) rotateZ(11deg);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(224, 212, 255, 0.55));
+}
+
+.app-shell .sheet-middle {
+  transform: translate3d(12px, -5px, -15px) rotateZ(5deg);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.84), rgba(255, 220, 231, 0.66));
+}
+
+.app-shell .sheet-front {
+  transform: translateZ(8px);
+}
+
+.app-shell .sheet-topline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.app-shell .sheet-mark {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(126, 97, 218, 0.12);
+  border-radius: 8px;
+  background: linear-gradient(145deg, #eee7ff, #dcd0ff);
+}
+
+.app-shell .sheet-label {
+  color: #74668f;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.app-shell .sheet-line {
+  display: block;
+  width: 74%;
+  height: 5px;
+  border-radius: 8px;
+  background: #dcd6e9;
+}
+
+.app-shell .sheet-line.line-long {
+  width: 100%;
+}
+
+.app-shell .sheet-line.line-short {
+  width: 54%;
+}
+
+.app-shell .sheet-highlight {
+  width: 88%;
+  height: 20px;
+  margin: 2px 0;
+  border: 1px solid rgba(237, 181, 83, 0.18);
+  border-radius: 5px;
+  background: linear-gradient(90deg, rgba(255, 215, 130, 0.77), rgba(255, 215, 130, 0.29));
+}
+
+.app-shell .floating-chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 12px 27px rgba(55, 42, 102, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  color: #41365e;
+  font-size: 9px;
+  font-weight: 700;
+  backdrop-filter: blur(14px);
+}
+
+.app-shell .floating-chip span {
+  color: #7658e8;
+  font-size: 14px;
+}
+
+.app-shell .chip-search {
+  top: 31px;
+  right: 0;
+  animation: chip-float 5s ease-in-out infinite;
+}
+
+.app-shell .chip-source {
+  bottom: 26px;
+  left: 1px;
+  animation: chip-float 5.6s ease-in-out -1.8s infinite;
+}
+
+.app-shell .chip-source span {
+  color: #e65278;
+}
+
+.app-shell .visual-sparkle {
+  position: absolute;
+  color: #a286f2;
+}
+
+.app-shell .sparkle-a {
+  top: 33px;
+  left: 17px;
+  font-size: 18px;
+}
+
+.app-shell .sparkle-b {
+  right: 18px;
+  bottom: 23px;
+  color: #f17899;
+  font-size: 24px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@keyframes document-hover {
+  0%,
+  100% {
+    transform: translateY(0) rotateY(-17deg) rotateX(7deg) rotateZ(-4deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotateY(-12deg) rotateX(3deg) rotateZ(-2deg);
+  }
+}
+
+@keyframes chip-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell .upload-card {
+    min-height: 300px;
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 0.7fr);
+    padding: 30px 25px;
+  }
+
+  .app-shell .upload-visual {
+    transform: scale(0.82);
+  }
+}
+
+@media (max-width: 560px) {
+  .app-shell .upload-card {
+    min-height: 430px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 175px;
+    gap: 0;
+    padding: 25px 22px 14px;
+  }
+
+  .app-shell .upload-card h2 {
+    font-size: 28px;
+  }
+
+  .app-shell .upload-visual {
+    min-height: 175px;
+    transform: scale(0.74);
+  }
+
+  .app-shell .document-stack {
+    transform: rotateY(-17deg) rotateX(7deg) rotateZ(-4deg) scale(0.84);
+  }
+
+  .app-shell .chip-search {
+    top: 11px;
+    right: 5px;
+  }
+
+  .app-shell .chip-source {
+    bottom: 9px;
+    left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell .document-stack,
+  .app-shell .floating-chip {
+    animation: none;
+  }
+
+  .app-shell .document-stack,
+  .app-shell .upload-card,
+  .app-shell .upload-card .primary-button {
+    transition: none;
+  }
+}
+
+.app-shell .upload-card {
+  border-color: #edb68f;
+  background:
+    radial-gradient(circle at 76% 14%, rgba(255, 197, 137, 0.42), transparent 12rem),
+    linear-gradient(145deg, #fffaf4, #fff1e4);
+}
+
+.app-shell .upload-card:hover {
+  border-color: #e99564;
+  box-shadow: 0 20px 44px rgba(151, 70, 34, 0.13);
+}
+
+.app-shell .upload-card .upload-icon,
+.app-shell .upload-card .upload-art-chip {
+  background: #fff0e5;
+  color: #a83b11;
+}
+
+.app-shell .upload-card .upload-art-chip {
+  border-color: rgba(220, 113, 62, 0.2);
+}
+
+.app-shell.theme-dark .upload-card {
+  border-color: #684735;
+  background:
+    radial-gradient(circle at 76% 14%, rgba(227, 113, 57, 0.2), transparent 12rem),
+    linear-gradient(145deg, #2c231e, #28201d);
+}
+
+.app-shell.theme-dark .upload-card:hover {
+  border-color: #a66a48;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.3);
+}
+
+.app-shell.theme-dark .upload-card .upload-icon,
+.app-shell.theme-dark .upload-card .upload-art-chip {
+  border-color: #76503a;
+  background: #493024;
+  color: #ffc29c;
+}
+
+.app-shell.theme-dark .upload-card {
+  border-color: rgba(207, 190, 255, 0.24);
+  background:
+    radial-gradient(ellipse at 76% 48%, rgba(143, 112, 237, 0.27), transparent 19rem),
+    linear-gradient(125deg, rgba(37, 31, 57, 0.96), rgba(43, 34, 65, 0.94));
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.app-shell.theme-dark .upload-card.dragging {
+  border-color: #c5a9ff;
+  box-shadow:
+    0 0 0 4px rgba(177, 146, 255, 0.2),
+    0 24px 65px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.app-shell.theme-dark .upload-kicker {
+  color: #d3c7ff;
+}
+
+.app-shell.theme-dark .upload-card h2 {
+  color: #fff;
+}
+
+.app-shell.theme-dark .upload-copy > p:not(.file-error) {
+  color: #ded8ed;
+}
+
+.app-shell.theme-dark .upload-card .file-types {
+  color: #c5bdd8;
+}
+
+.app-shell.theme-dark .upload-card .file-error {
+  color: #ff9eac;
+}
+
+.app-shell.theme-dark .document-sheet {
+  border-color: rgba(219, 207, 255, 0.3);
+  background: linear-gradient(145deg, rgba(70, 58, 99, 0.95), rgba(43, 35, 65, 0.92));
+  box-shadow:
+    0 24px 42px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.app-shell.theme-dark .sheet-back {
+  background: linear-gradient(145deg, rgba(91, 70, 133, 0.83), rgba(64, 49, 92, 0.8));
+}
+
+.app-shell.theme-dark .sheet-middle {
+  background: linear-gradient(145deg, rgba(92, 63, 102, 0.88), rgba(67, 45, 76, 0.85));
+}
+
+.app-shell.theme-dark .sheet-label {
+  color: #e3d9ff;
+}
+
+.app-shell.theme-dark .sheet-line {
+  background: #81749c;
+}
+
+.app-shell.theme-dark .sheet-highlight {
+  border-color: rgba(255, 220, 141, 0.18);
+  background: linear-gradient(90deg, rgba(255, 206, 109, 0.62), rgba(255, 206, 109, 0.23));
+}
+
+.app-shell.theme-dark .floating-chip {
+  border-color: rgba(231, 222, 255, 0.22);
+  background: rgba(43, 35, 65, 0.82);
+  box-shadow:
+    0 12px 27px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #f2edff;
+}
+
+.app-shell.theme-dark .floating-chip span {
+  color: #c5aaff;
+}
+
+.app-shell.theme-dark .chip-source span {
+  color: #ff9caf;
+}
